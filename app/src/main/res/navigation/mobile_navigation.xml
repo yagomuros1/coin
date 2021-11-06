@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_bs">
+
+    <fragment
+        android:id="@+id/navigation_bs"
+        android:name="com.yago.coin.ui.views.main.ui.busca_segura.BuscaSeguraFragment"
+        android:label="@string/title_bs"
+        tools:layout="@layout/fragment_bs" />
+
+    <fragment
+        android:id="@+id/navigation_portfolio"
+        android:name="com.yago.coin.ui.views.main.ui.portfolio.PortfolioFragment"
+        android:label="@string/title_portfolio"
+        tools:layout="@layout/fragment_portfolio" />
+
+    <fragment
+        android:id="@+id/navigation_presenca"
+        android:name="com.yago.coin.ui.views.main.ui.presenca.PresencaFragment"
+        android:label="@string/title_presenca"
+        tools:layout="@layout/fragment_presenca" />
+</navigation>
