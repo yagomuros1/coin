@@ -1,6 +1,5 @@
 package com.yago.coin.data.repository
 
-import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import com.yago.coin.app.AppExecutors
@@ -21,7 +20,6 @@ import javax.inject.Singleton
 
 @Singleton
 class MainRepository @Inject constructor(
-    private val app: Application,
     private val appExecutors: AppExecutors,
     private val coinBackendApi: CoinBackendApi,
     private val coinDb: CoinDb
@@ -30,15 +28,14 @@ class MainRepository @Inject constructor(
     fun getRates(): LiveData<Resource<List<Rate>>> {
         return object : DbAndApiNetworkBoundResource<List<Rate>, List<RateResponse>>(appExecutors) {
 
-            override fun processTryToRefreshResponse(userTokenResponse: ApiResponse<UserTokenResponse>?) =
-                processRefreshToken()
+            override fun processTryToRefreshResponse(userTokenResponse: ApiResponse<UserTokenResponse>?) = processRefreshToken()
 
             override fun refreshTokenCall() = tryToRefreshToken()
 
             override fun shouldFetch(data: List<Rate>?) = true
 
             override fun saveCallResult(item: List<RateResponse>) {
-                DataAssembler.assembleRates(coinDb, item, app)
+                DataAssembler.assembleRates(coinDb, item)
             }
 
             override fun loadFromDb(): LiveData<List<Rate>> {
@@ -65,15 +62,14 @@ class MainRepository @Inject constructor(
     fun getTrades(): LiveData<Resource<List<Trade>>> {
         return object : DbAndApiNetworkBoundResource<List<Trade>, List<TransactionResponse>>(appExecutors) {
 
-            override fun processTryToRefreshResponse(userTokenResponse: ApiResponse<UserTokenResponse>?) =
-                processRefreshToken()
+            override fun processTryToRefreshResponse(userTokenResponse: ApiResponse<UserTokenResponse>?) = processRefreshToken()
 
             override fun refreshTokenCall() = tryToRefreshToken()
 
             override fun shouldFetch(data: List<Trade>?) = true
 
             override fun saveCallResult(item: List<TransactionResponse>) {
-                DataAssembler.assembleTrades(coinDb, item, app)
+                DataAssembler.assembleTrades(coinDb, item)
             }
 
             override fun loadFromDb(): LiveData<List<Trade>> {
@@ -103,22 +99,6 @@ class MainRepository @Inject constructor(
         appExecutors.diskIO().execute {
 
             val list = coinDb.rateDao().getAllData()
-
-            appExecutors.mainThread().execute {
-                dataLD.value = list
-            }
-        }
-        return dataLD
-
-    }
-
-    fun getDbTransactions(): LiveData<List<Trade>> {
-
-        val dataLD = MediatorLiveData<List<Trade>>()
-
-        appExecutors.diskIO().execute {
-
-            val list = coinDb.tradeDao().getAllData()
 
             appExecutors.mainThread().execute {
                 dataLD.value = list

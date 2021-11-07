@@ -14,6 +14,7 @@ import com.yago.coin.R
 import timber.log.Timber
 import javax.inject.Inject
 
+
 class FragmentBindingAdapters @Inject constructor(private val context: Context) {
 
     @BindingAdapter("imageUrl")
@@ -22,14 +23,6 @@ class FragmentBindingAdapters @Inject constructor(private val context: Context) 
             Glide.with(context).load(url).listener(getRequestListener()).into(imageView).waitForLayout()
         } else {
             Glide.with(context).load(R.mipmap.placeholder_empty_image).listener(getRequestListener()).into(imageView).waitForLayout()
-        }
-    }
-
-    @BindingAdapter("bindImageUrlWithoutPlaceholder")
-    fun bindImageUrlWithoutPlaceholder(imageView: AppCompatImageView, url: String?) {
-        if (url != null) {
-            Glide.with(context).load(url).error(Glide.with(imageView).load(R.mipmap.placeholder_empty_image)).listener(getRequestListener()).into(imageView)
-                .waitForLayout()
         }
     }
 

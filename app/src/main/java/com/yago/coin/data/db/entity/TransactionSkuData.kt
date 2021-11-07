@@ -2,10 +2,7 @@ package com.yago.coin.data.db.entity
 
 import androidx.room.Entity
 
-@Entity(
-    primaryKeys = ["id"]
-)
-
+@Entity(primaryKeys = ["id"])
 data class TransactionSkuData(
 
     val id: Long,

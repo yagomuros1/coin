@@ -25,7 +25,7 @@ class SplashViewModel @Inject constructor(private val mainInteractor: MainIntera
             when (contexts.status) {
                 Status.ERROR -> {
                     val errorCode = contexts.code ?: NO_ERROR_CODE
-                    val errorMessage = "ErrorUtils.getMessageFromError(errorCode, app)"
+                    val errorMessage = "Error"
                     result.postValue(Resource.error(errorCode, errorMessage, null))
                     result
                 }
@@ -52,7 +52,7 @@ class SplashViewModel @Inject constructor(private val mainInteractor: MainIntera
             when (contexts.status) {
                 Status.ERROR -> {
                     val errorCode = contexts.code ?: NO_ERROR_CODE
-                    val errorMessage = "ErrorUtils.getMessageFromError(errorCode, app)"
+                    val errorMessage = "Error"
                     result.postValue(Resource.error(errorCode, errorMessage, null))
                     result
                 }
@@ -71,7 +71,7 @@ class SplashViewModel @Inject constructor(private val mainInteractor: MainIntera
             }
         }
 
-    fun onResumeMainScreen() {
+    fun onCreateSplashScreen() {
         mainInteractor.getRates()
     }
 

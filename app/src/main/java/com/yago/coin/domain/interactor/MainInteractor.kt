@@ -1,6 +1,5 @@
 package com.yago.coin.domain.interactor
 
-import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -12,12 +11,11 @@ import com.yago.coin.data.utils.Resource
 import com.yago.coin.domain.livedata.AbsentLiveData
 import javax.inject.Inject
 
-class MainInteractor @Inject constructor(private val app: Application, private val mainRepository: MainRepository) {
+class MainInteractor @Inject constructor(private val mainRepository: MainRepository) {
 
     private val rateTrigger = MutableLiveData<Unit>()
     private val savedRateTrigger = MutableLiveData<Unit>()
     private val transactionTrigger = MutableLiveData<Unit>()
-    private val savedTransactionTrigger = MutableLiveData<Unit>()
     private val distinctTransactionsTrigger = MutableLiveData<Unit>()
     private val skuTransactionsFilter = MutableLiveData<String?>()
 
@@ -31,7 +29,7 @@ class MainInteractor @Inject constructor(private val app: Application, private v
         }
 
     val dbRates: LiveData<List<Rate>> = Transformations
-        .switchMap(rateTrigger) { filter ->
+        .switchMap(savedRateTrigger) { filter ->
             if (filter != null) {
                 mainRepository.getDbRates()
             } else {
@@ -43,15 +41,6 @@ class MainInteractor @Inject constructor(private val app: Application, private v
         .switchMap(transactionTrigger) { filter ->
             if (filter != null) {
                 mainRepository.getTrades()
-            } else {
-                AbsentLiveData.create()
-            }
-        }
-
-    val dbTransactions: LiveData<List<Trade>> = Transformations
-        .switchMap(transactionTrigger) { filter ->
-            if (filter != null) {
-                mainRepository.getDbTransactions()
             } else {
                 AbsentLiveData.create()
             }
@@ -93,10 +82,6 @@ class MainInteractor @Inject constructor(private val app: Application, private v
 
     fun getSavedRates() {
         savedRateTrigger.value = Unit
-    }
-
-    fun getSavedTransactions() {
-        savedTransactionTrigger.value = Unit
     }
 
 }

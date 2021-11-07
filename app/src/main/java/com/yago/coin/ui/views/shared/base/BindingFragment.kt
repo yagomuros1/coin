@@ -12,7 +12,6 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.transition.TransitionInflater
 import com.yago.coin.R
-import com.yago.coin.data.utils.Status
 import com.yago.coin.domain.injector.Injectable
 import com.yago.coin.domain.livedata.autoCleared
 import com.yago.coin.ui.binding.CoinDataBindingComponent
@@ -35,7 +34,6 @@ abstract class BindingFragment<T : ViewDataBinding> : Fragment(), Injectable {
         val dataBinding = createDataBinding(inflater, container)
 
         binding = dataBinding
-        sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(R.transition.move)
 
         // Animation Watchdog - Make sure we don't wait longer than a second for the Glide image
         handler.postDelayed(1000) {

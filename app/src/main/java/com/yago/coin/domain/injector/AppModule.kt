@@ -6,8 +6,6 @@ import com.yago.coin.data.api.CoinBackendApi
 import com.yago.coin.data.api.RestAdapter
 import com.yago.coin.data.db.CoinDb
 import com.yago.coin.data.db.dao.RateDao
-import com.yago.coin.domain.session.SessionManager
-import com.yago.coin.domain.session.SharedPreferences
 import com.yago.coin.ui.binding.CoinDataBindingComponent
 import dagger.Module
 import dagger.Provides
@@ -36,15 +34,6 @@ class AppModule {
             .build()
 
     }
-
-    @Singleton
-    @Provides
-    fun provideSharedPreferences(app: Application): SharedPreferences = SharedPreferences(app)
-
-    @Singleton
-    @Provides
-    fun provideSessionManager(sharedPreferences: SharedPreferences, db: CoinDb): SessionManager = SessionManager(sharedPreferences, db)
-
 
     @Singleton
     @Provides

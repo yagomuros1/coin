@@ -18,9 +18,6 @@ interface RateDao {
         update(data)
     }
 
-    @Query("SELECT * FROM Rate WHERE id = :id")
-    fun findById(id: String): Rate
-
     @Query("SELECT * FROM Rate")
     fun getAllData(): List<Rate>
 

@@ -6,6 +6,6 @@ import com.yago.coin.domain.customdata.TradeInEur
 
 abstract class BaseTradeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-    abstract fun bind(onClick: View.OnClickListener, item: TradeInEur)
+    abstract fun bind(item: TradeInEur)
 
 }

@@ -6,10 +6,6 @@
 
     <data>
 
-        <variable
-            name="clickListener"
-            type="android.view.View.OnClickListener" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,7 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorBlackLightLike8"
-        android:onClick="@{clickListener}"
         android:padding="12dp">
 
         <androidx.cardview.widget.CardView

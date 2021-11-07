@@ -8,15 +8,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yago.coin.R
-import com.yago.coin.data.utils.Status
-import com.yago.coin.databinding.ActivityMainBinding
 import com.yago.coin.data.db.entity.TransactionSkuData
+import com.yago.coin.databinding.ActivityMainBinding
 import com.yago.coin.ui.views.main.adapter.SkusAdapter
 import com.yago.coin.ui.views.shared.base.BindingActivity
 import com.yago.coin.ui.views.tradedetail.TradeDetailActivity
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
-import org.jetbrains.anko.toast
 import javax.inject.Inject
 
 class MainActivity : BindingActivity<ActivityMainBinding>(), HasSupportFragmentInjector {
@@ -56,29 +54,18 @@ class MainActivity : BindingActivity<ActivityMainBinding>(), HasSupportFragmentI
 
         }
 
-        initListeners()
-
         initializeViewObservers()
 
         binding.tradesRecycler.layoutManager = LinearLayoutManager(this)
         binding.tradesRecycler.adapter = skusAdapter
 
-        mainViewModel.onResumeMainScreen()
-    }
-
-    private fun initListeners() {
-
+        mainViewModel.onCreateMainScreen()
     }
 
     private fun initializeViewObservers() {
-
-
         mainViewModel.distinct.observe(this, { value ->
-
             skusAdapter.submitList(value)
-
         })
-
     }
 
     override fun onBackPressed() {

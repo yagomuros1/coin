@@ -1,8 +1,6 @@
 package com.yago.coin.ui.views.tradedetail.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
@@ -13,7 +11,7 @@ import com.yago.coin.ui.views.tradedetail.adapter.viewholders.BaseTradeViewHolde
 import com.yago.coin.ui.views.tradedetail.adapter.viewholders.HeaderViewHolder
 import com.yago.coin.ui.views.tradedetail.adapter.viewholders.TradesViewHolder
 
-class TradesAdapter(private val context: Context?) : ListAdapter<TradeInEur, BaseTradeViewHolder>(
+class TradesAdapter : ListAdapter<TradeInEur, BaseTradeViewHolder>(
 
     object : DiffUtil.ItemCallback<TradeInEur>() {
         override fun areItemsTheSame(oldItem: TradeInEur, newItem: TradeInEur): Boolean = false
@@ -25,8 +23,6 @@ class TradesAdapter(private val context: Context?) : ListAdapter<TradeInEur, Bas
         private const val ITEM_HEADER = 0
         private const val ITEM = 1
     }
-
-    var listener: Listener? = null
 
     override fun getItemViewType(position: Int): Int = when (position) {
         0 -> {
@@ -65,27 +61,14 @@ class TradesAdapter(private val context: Context?) : ListAdapter<TradeInEur, Bas
 
         }
         return baseViewHolder
-
     }
 
     override fun onBindViewHolder(holder: BaseTradeViewHolder, position: Int) {
         val trade = getItem(position)
         holder.apply {
-            bind(createOnClickListener(trade), trade)
+            bind(trade)
             itemView.tag = trade
         }
-    }
-
-    private fun createOnClickListener(trade: TradeInEur): View.OnClickListener {
-        return View.OnClickListener {
-            context.let {
-                listener?.onclick(trade)
-            }
-        }
-    }
-
-    interface Listener {
-        fun onclick(trade: TradeInEur)
     }
 
 }

@@ -1,6 +1,5 @@
 package com.yago.coin.data.repository.assembler
 
-import android.app.Application
 import com.yago.coin.data.api.response.RateResponse
 import com.yago.coin.data.api.response.TransactionResponse
 import com.yago.coin.data.db.CoinDb
@@ -9,7 +8,7 @@ import com.yago.coin.data.db.entity.Trade
 
 object DataAssembler {
 
-    fun assembleRates(coinDb: CoinDb, rates: List<RateResponse>, app: Application) {
+    fun assembleRates(coinDb: CoinDb, rates: List<RateResponse>) {
         coinDb.runInTransaction {
             coinDb.rateDao().removeAllData()
             rates.forEach { rate ->
@@ -18,7 +17,7 @@ object DataAssembler {
         }
     }
 
-    fun assembleTrades(coinDb: CoinDb, trades: List<TransactionResponse>, app: Application) {
+    fun assembleTrades(coinDb: CoinDb, trades: List<TransactionResponse>) {
         coinDb.runInTransaction {
             coinDb.tradeDao().removeAllData()
             trades.forEach { trade ->

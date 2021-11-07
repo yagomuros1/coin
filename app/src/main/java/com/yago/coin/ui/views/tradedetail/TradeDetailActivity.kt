@@ -10,12 +10,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yago.coin.R
 import com.yago.coin.databinding.ActivityTradeDetailBinding
-import com.yago.coin.domain.customdata.TradeInEur
 import com.yago.coin.ui.views.shared.base.BindingActivity
 import com.yago.coin.ui.views.tradedetail.adapter.TradesAdapter
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
-import org.jetbrains.anko.toast
 import javax.inject.Inject
 
 class TradeDetailActivity : BindingActivity<ActivityTradeDetailBinding>(), HasSupportFragmentInjector {
@@ -53,32 +51,15 @@ class TradeDetailActivity : BindingActivity<ActivityTradeDetailBinding>(), HasSu
 
         tradeDetailViewModel = ViewModelProvider(this, viewModelFactory)[TradeDetailViewModel::class.java]
 
-        tradesAdapter = TradesAdapter(this)
-
-        tradesAdapter.listener = object : TradesAdapter.Listener {
-            override fun onclick(trade: TradeInEur) {
-                toast("clicked!")
-            }
-        }
-
+        tradesAdapter = TradesAdapter()
         binding.tradesRecycler.layoutManager = LinearLayoutManager(this)
         binding.tradesRecycler.adapter = tradesAdapter
 
-        initListeners()
-
         initializeViewObservers()
 
+        tradeDetailViewModel.onCreateTradeScreen(skuSelected)
+
         supportFragmentManager.executePendingTransactions()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        tradeDetailViewModel.onResumeMainScreen(skuSelected)
-    }
-
-
-    private fun initListeners() {
-
     }
 
     private fun initializeViewObservers() {
@@ -88,7 +69,7 @@ class TradeDetailActivity : BindingActivity<ActivityTradeDetailBinding>(), HasSu
         })
 
         tradeDetailViewModel.rates.observe(this, {
-            Log.d("", "")
+            Log.d("Coin_APP", "Rates received")
         })
 
     }

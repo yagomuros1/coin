@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.yago.coin.data.db.entity.Trade
 import com.yago.coin.data.db.entity.TransactionSkuData
 import com.yago.coin.domain.interactor.MainInteractor
 import javax.inject.Inject
@@ -18,7 +17,7 @@ class MainViewModel @Inject constructor(private val mainInteractor: MainInteract
             result
         }
 
-    fun onResumeMainScreen() {
+    fun onCreateMainScreen() {
         mainInteractor.getDistinctTrades()
     }
 
