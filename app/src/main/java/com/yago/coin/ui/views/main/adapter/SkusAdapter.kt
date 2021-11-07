@@ -13,8 +13,8 @@ import com.yago.coin.data.db.entity.TransactionSkuData
 class SkusAdapter(private val context: Context?) : ListAdapter<TransactionSkuData, SkusViewHolder>(
 
     object : DiffUtil.ItemCallback<TransactionSkuData>() {
-        override fun areItemsTheSame(oldItem: TransactionSkuData, newItem: TransactionSkuData): Boolean = false
-        override fun areContentsTheSame(oldItem: TransactionSkuData, newItem: TransactionSkuData): Boolean = false
+        override fun areItemsTheSame(oldItem: TransactionSkuData, newItem: TransactionSkuData): Boolean = oldItem.id == newItem.id
+        override fun areContentsTheSame(oldItem: TransactionSkuData, newItem: TransactionSkuData): Boolean = oldItem == newItem
 
     }) {
 

@@ -7,7 +7,7 @@
 
     <!-- Errores -->
     <string name="generic_error">Error</string>
-    <string name="permission_error">Error de permisos</string>
+    <string name="permission_error">Permissions error</string>
 
     <string name="no_connection_title">No network connection</string>
     <string name="no_connection_description">Please, turn on network access, and retry</string>

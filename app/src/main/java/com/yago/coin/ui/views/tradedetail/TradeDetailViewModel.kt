@@ -44,7 +44,14 @@ class TradeDetailViewModel @Inject constructor(private val mainInteractor: MainI
     private fun convertToEuro(trades: List<Trade>): List<TradeInEur> {
         val listWithEur: MutableList<TradeInEur> = mutableListOf()
         trades.forEach {
-            listWithEur.add(TradeInEur(it.sku, it.amount, getEurAmountFromCurrency(it.currency, it.amount), it.currency))
+            listWithEur.add(
+                TradeInEur(
+                    it.sku,
+                    it.amount,
+                    getEurAmountFromCurrency(it.currency, it.amount),
+                    it.currency
+                )
+            )
         }
         return listWithEur
     }

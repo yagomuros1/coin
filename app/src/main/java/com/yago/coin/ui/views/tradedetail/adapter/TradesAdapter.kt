@@ -14,9 +14,8 @@ import com.yago.coin.ui.views.tradedetail.adapter.viewholders.TradesViewHolder
 class TradesAdapter : ListAdapter<TradeInEur, BaseTradeViewHolder>(
 
     object : DiffUtil.ItemCallback<TradeInEur>() {
-        override fun areItemsTheSame(oldItem: TradeInEur, newItem: TradeInEur): Boolean = false
-        override fun areContentsTheSame(oldItem: TradeInEur, newItem: TradeInEur): Boolean = false
-
+        override fun areItemsTheSame(oldItem: TradeInEur, newItem: TradeInEur): Boolean = oldItem.sku == newItem.sku
+        override fun areContentsTheSame(oldItem: TradeInEur, newItem: TradeInEur): Boolean = oldItem == newItem
     }) {
 
     companion object {
