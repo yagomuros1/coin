@@ -3,4 +3,56 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+    <color name="colorPrimaryMid">#C0E853</color>
+    <color name="colorPrimaryLight">#DCF890</color>
+
+    <color name="colorPrimary54">#8A8DB61A</color>
+    <color name="colorPrimary45">#738DB673</color>
+    <color name="colorPrimary21">#368DB61A</color>
+
+    <color name="colorPrimaryMid12">#1FC0E853</color>
+    <color name="colorPrimaryMid24">#3DC0E853</color>
+
+    <color name="colorWarning">#FF0000</color>
+    <color name="white">#FFFFFF</color>
+
+    <color name="white20">#33FFFFFF</color>
+    <color name="colorTransparent">#00000000</color>
+
+    <color name="colorBlack">#333333</color>
+    <color name="colorBlack25">#40333333</color>
+    <color name="colorBlackDark">#202020</color>
+    <color name="colorBlackMid">#6E6E6E</color>
+    <color name="colorBlackLight">#ADADAD</color>
+    <color name="colorBlackLight50">#80ADADAD</color>
+    <color name="colorBlackLight18">#2EADADAD</color>
+    <color name="colorBlackLight8">#14ADADAD</color>
+    <color name="colorBlackLightLike8">#EDEDED</color>
+
+    <color name="colorCorrect">#57D864</color>
+    <color name="colorError">#D85757</color>
+    <color name="colorError24">#3DD85757</color>
+
+    <color name="colorBlack87">#DE333333</color>
+    <color name="colorBlack54">#8A333333</color>
+    <color name="colorBlack38">#61333333</color>
+
+    <color name="transparent">#00000000</color>
+    <color name="overlay">#24000000</color>
+
+    <color name="background_loading_placeholder">#aaaaaa</color>
+
+    <!-- avatars -->
+    <color name="avatar1">#7BB657</color>
+    <color name="avatar2">#CB4A3B</color>
+    <color name="avatar3">#EB9D9C</color>
+    <color name="avatar4">#E23D57</color>
+    <color name="avatar5">#B3CC4B</color>
+    <color name="avatar6">#006C9D</color>
+    <color name="avatar7">#5C579F</color>
+    <color name="avatar8">#E77116</color>
+    <color name="avatar9">#56BDE7</color>
+    <color name="avatar10">#ED9291</color>
+
 </resources>

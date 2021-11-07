@@ -5,7 +5,7 @@ import androidx.room.Room
 import com.yago.coin.data.api.CoinBackendApi
 import com.yago.coin.data.api.RestAdapter
 import com.yago.coin.data.db.CoinDb
-import com.yago.coin.data.db.dao.DataDao
+import com.yago.coin.data.db.dao.RateDao
 import com.yago.coin.domain.session.SessionManager
 import com.yago.coin.domain.session.SharedPreferences
 import com.yago.coin.ui.binding.CoinDataBindingComponent
@@ -48,6 +48,6 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideDataDao(db: CoinDb): DataDao = db.dataDao()
+    fun provideRateDao(db: CoinDb): RateDao = db.rateDao()
 
 }

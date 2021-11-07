@@ -6,10 +6,12 @@ import androidx.room.Entity
     primaryKeys = ["id"]
 )
 
-data class Data (
+data class TransactionSkuData(
 
-    val id : String,
+    val id: Long,
 
-    val description : String
+    val sku: String,
+
+    val count: Int
 
 )

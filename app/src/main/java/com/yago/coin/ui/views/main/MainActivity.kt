@@ -6,11 +6,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.yago.coin.R
+import com.yago.coin.data.utils.Status
 import com.yago.coin.databinding.ActivityMainBinding
+import com.yago.coin.data.db.entity.TransactionSkuData
+import com.yago.coin.ui.views.main.adapter.SkusAdapter
 import com.yago.coin.ui.views.shared.base.BindingActivity
+import com.yago.coin.ui.views.tradedetail.TradeDetailActivity
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
+import org.jetbrains.anko.toast
 import javax.inject.Inject
 
 class MainActivity : BindingActivity<ActivityMainBinding>(), HasSupportFragmentInjector {
@@ -26,6 +32,10 @@ class MainActivity : BindingActivity<ActivityMainBinding>(), HasSupportFragmentI
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
+    private lateinit var mainViewModel: MainViewModel
+
+    private lateinit var skusAdapter: SkusAdapter
+
     override fun createDataBinding(): ActivityMainBinding =
         DataBindingUtil.setContentView(this, R.layout.activity_main)
 
@@ -35,15 +45,58 @@ class MainActivity : BindingActivity<ActivityMainBinding>(), HasSupportFragmentI
         super.onCreate(savedInstanceState)
         supportPostponeEnterTransition()
 
-        binding.lifecycleOwner = this
+        mainViewModel = ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
+
+        skusAdapter = SkusAdapter(this)
+
+        skusAdapter.listener = object : SkusAdapter.Listener {
+            override fun onclick(sku: TransactionSkuData) {
+                TradeDetailActivity().start(this@MainActivity, sku.sku)
+            }
+
+        }
 
         initListeners()
 
-        supportFragmentManager.executePendingTransactions()
+        initializeViewObservers()
+
+        binding.tradesRecycler.layoutManager = LinearLayoutManager(this)
+        binding.tradesRecycler.adapter = skusAdapter
+
+        mainViewModel.onResumeMainScreen()
     }
 
-
     private fun initListeners() {
+
+    }
+
+    private fun initializeViewObservers() {
+
+        mainViewModel.rates.observe(this, { value ->
+
+            if (value.status == Status.SUCCESS) {
+                mainViewModel.onGetTransactions()
+            } else if (value.status == Status.ERROR) {
+                toast("Error!")
+            }
+
+        })
+
+        mainViewModel.transactions.observe(this, { value ->
+
+            if (value.status == Status.SUCCESS) {
+                mainViewModel.getDistinctTrades()
+            } else if (value.status == Status.ERROR) {
+                toast("Error!")
+            }
+
+        })
+
+        mainViewModel.distinct.observe(this, { value ->
+
+            skusAdapter.submitList(value)
+
+        })
 
     }
 
