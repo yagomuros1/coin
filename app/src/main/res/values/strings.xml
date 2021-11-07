@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Common -->
-    <string name="app_name">Money Converter</string>
+    <string name="app_name">Coin Converter</string>
     <string name="welcome">¡Welcome!</string>
     <string name="ok">OK</string>
 
