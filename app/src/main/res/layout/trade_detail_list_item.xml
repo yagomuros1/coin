@@ -16,7 +16,7 @@
         android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryMid24"
+        android:background="@color/colorBlackLightLike8"
         android:onClick="@{clickListener}"
         android:padding="12dp">
 
@@ -38,14 +38,26 @@
                 android:layout_height="40dp">
 
                 <TextView
-                    android:id="@+id/trade"
+                    android:id="@+id/transaction"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="Trans."
+                    android:layout_marginStart="12dp"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/trade"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/transaction"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:text="Item 1" />
+                    tools:text="26.80" />
 
                 <TextView
                     android:id="@+id/tradeCurrency"
@@ -56,13 +68,14 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@id/trade"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:text="Item 1" />
+                    tools:text="USD" />
 
                 <TextView
                     android:id="@+id/eurAmount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"
+                    android:layout_marginEnd="8dp"
+                    android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/eur"
                     app:layout_constraintTop_toTopOf="parent"
@@ -72,8 +85,9 @@
                     android:id="@+id/eur"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="EUR"
-                    android:textSize="16sp"
+                    android:layout_marginEnd="16dp"
+                    android:text="€"
+                    android:textSize="22sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

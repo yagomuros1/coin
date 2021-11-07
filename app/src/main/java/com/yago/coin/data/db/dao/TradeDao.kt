@@ -31,4 +31,7 @@ interface TradeDao {
     @Query("SELECT * FROM Trade WHERE Trade.sku == :sku")
     fun getTradesBySku(sku: String): List<Trade>
 
+    @Query("DELETE FROM Trade")
+    fun removeAllData()
+
 }

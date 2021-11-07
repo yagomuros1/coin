@@ -1,16 +1,13 @@
 package com.yago.coin.domain.customdata
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-
 
 data class TradeInEur(
 
     val sku: String?,
 
-    val amount: String?,
+    val amount: Double?,
 
-    val eurAmount: String,
+    val eurAmount: Double?,
 
     val currency: String?
 

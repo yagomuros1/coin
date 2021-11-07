@@ -6,50 +6,33 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.yago.coin.data.db.entity.Rate
 import com.yago.coin.data.db.entity.Trade
-import com.yago.coin.data.utils.Resource
-import com.yago.coin.data.utils.Status
 import com.yago.coin.domain.customdata.TradeInEur
 import com.yago.coin.domain.interactor.MainInteractor
-import com.yago.coin.ui.views.main.MainViewModel
 import javax.inject.Inject
 
 class TradeDetailViewModel @Inject constructor(private val mainInteractor: MainInteractor) : ViewModel() {
 
+    companion object {
+        const val EUR_CODE = "EUR"
+    }
+
     private var rateList: List<Rate>? = emptyList()
     private var sku: String? = null
 
-    val rates: LiveData<Resource<List<Rate>>> = Transformations
-        .switchMap(mainInteractor.rates) { rates ->
-            val result = MutableLiveData<Resource<List<Rate>>>()
-
-            when (rates.status) {
-                Status.ERROR -> {
-                    val errorCode = rates.code ?: MainViewModel.NO_ERROR_CODE
-                    val errorMessage = "ErrorUtils.getMessageFromError(errorCode, app)"
-                    result.postValue(Resource.error(errorCode, errorMessage, null))
-                    result
-                }
-                Status.LOADING -> {
-                    result.postValue(Resource.loading(null))
-                    result
-                }
-                Status.FASTLOAD -> {
-                    result.postValue(Resource.fastload(null))
-                    result
-                }
-                else -> {
-                    rateList = rates.data
-                    mainInteractor.getTradesBySku(sku)
-                    result.postValue(rates)
-                    result
-                }
-            }
+    val rates: LiveData<List<Rate>> = Transformations
+        .switchMap(mainInteractor.dbRates) { rates ->
+            rateList = rates
+            mainInteractor.getTradesBySku(sku)
+            val result = MutableLiveData<List<Rate>>()
+            result.postValue(rates)
+            result
         }
 
     val transactions: LiveData<List<TradeInEur>> = Transformations
         .switchMap(mainInteractor.transactionsBySku) { transactions ->
             val result = MutableLiveData<List<TradeInEur>>()
-            result.postValue(convertToEuro(transactions))
+            addTotalValueAtFirstItem(convertToEuro(transactions))
+            result.postValue(addTotalValueAtFirstItem(convertToEuro(transactions)))
             result
         }
 
@@ -60,27 +43,41 @@ class TradeDetailViewModel @Inject constructor(private val mainInteractor: MainI
 
     private fun convertToEuro(trades: List<Trade>): List<TradeInEur> {
 
-        val er: MutableList<TradeInEur> = mutableListOf()
+        val listWithEur: MutableList<TradeInEur> = mutableListOf()
 
         trades.forEach {
-            er.add(TradeInEur(it.sku, it.amount, getEurAmountFromCurrency(it.currency, it.amount).toString(), it.currency))
+            listWithEur.add(TradeInEur(it.sku, it.amount, getEurAmountFromCurrency(it.currency, it.amount), it.currency))
         }
 
-        return er
+        return listWithEur
 
     }
 
-    private fun getEurAmountFromCurrency(currency: String?, amount: String?): Double? {
+    private fun addTotalValueAtFirstItem(list: List<TradeInEur>): List<TradeInEur> {
 
-        if (currency == "EUR") {
+        val finalList: MutableList<TradeInEur> = mutableListOf()
+
+        list.mapNotNull { it.eurAmount }.sumOf { it }.let {
+            finalList.add(TradeInEur(null, it, it, EUR_CODE))
+        }
+
+        finalList.addAll(list)
+
+        return finalList
+
+    }
+
+    private fun getEurAmountFromCurrency(currency: String?, amount: Double?): Double? {
+
+        if (currency == EUR_CODE) {
             return amount?.toDouble()
         } else {
 
-            val isDirectConversion = rateList?.find { it.from == currency && it.to == "EUR" } != null
+            val isDirectConversion = rateList?.find { it.from == currency && it.to == EUR_CODE } != null
 
             if (isDirectConversion) {
 
-                rateList?.find { it.from == currency && it.to == "EUR" }?.rate?.toDouble()?.let {
+                rateList?.find { it.from == currency && it.to == EUR_CODE }?.rate?.toDouble()?.let {
                     return amount?.toDouble()?.times(it)
                 }
 
@@ -90,13 +87,13 @@ class TradeDetailViewModel @Inject constructor(private val mainInteractor: MainI
                     rateList?.find { it.from == currency && it.to == filtered.first().from }?.rate?.let { rateConversion ->
                         return getEurAmountFromCurrency(
                             filtered.first().from,
-                            (amount?.toDouble()?.times(rateConversion.toDouble())).toString()
+                            (amount?.times(rateConversion))
                         )
                     }
                 }
             }
         }
-        return 2.4
+        return -1.0
     }
 
 }

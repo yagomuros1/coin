@@ -16,6 +16,8 @@ class RequestInterceptor @Inject constructor(private val app: Application) : Int
     }
 
     private fun getHeaders(): Map<String, String> =
-        HashMap<String, String>().apply {}
+        HashMap<String, String>().apply {
+            put("Accept", "application/json")
+        }
 
 }

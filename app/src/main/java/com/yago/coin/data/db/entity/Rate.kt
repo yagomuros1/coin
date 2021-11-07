@@ -10,6 +10,6 @@ data class Rate(
 
     val to: String,
 
-    val rate: String
+    val rate: Double
 
 )

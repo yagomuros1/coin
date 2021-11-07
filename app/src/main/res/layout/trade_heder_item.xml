@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="36dp"
-            android:backgroundTint="@color/colorBlackLight"
+            android:backgroundTint="@color/colorPrimary45"
             android:clipToPadding="false"
             android:paddingBottom="6dp"
             app:cardCornerRadius="12dp"
@@ -35,42 +35,20 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp">
+                android:layout_height="70dp">
 
                 <TextView
-                    android:id="@+id/skuText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="26dp"
-                    android:text="SKU:"
-                    android:textSize="16sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/sku"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="16dp"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/skuText"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="Item 1" />
-
-                <TextView
-                    android:id="@+id/count"
+                    android:id="@+id/total"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:paddingStart="12dp"
-                    android:text="Items count"
+                    android:textAlignment="center"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/sku"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.523" />
+                    tools:text="Item 1" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,10 +8,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.yago.coin.R
-import com.yago.coin.data.db.entity.Trade
 import com.yago.coin.domain.customdata.TradeInEur
+import com.yago.coin.ui.views.tradedetail.adapter.viewholders.BaseTradeViewHolder
+import com.yago.coin.ui.views.tradedetail.adapter.viewholders.HeaderViewHolder
+import com.yago.coin.ui.views.tradedetail.adapter.viewholders.TradesViewHolder
 
-class TradesAdapter(private val context: Context?) : ListAdapter<TradeInEur, TradesViewHolder>(
+class TradesAdapter(private val context: Context?) : ListAdapter<TradeInEur, BaseTradeViewHolder>(
 
     object : DiffUtil.ItemCallback<TradeInEur>() {
         override fun areItemsTheSame(oldItem: TradeInEur, newItem: TradeInEur): Boolean = false
@@ -19,15 +21,54 @@ class TradesAdapter(private val context: Context?) : ListAdapter<TradeInEur, Tra
 
     }) {
 
-    var listener: Listener? = null
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TradesViewHolder {
-        return TradesViewHolder(
-            DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.trade_detail_list_item, parent, false)
-        )
+    companion object {
+        private const val ITEM_HEADER = 0
+        private const val ITEM = 1
     }
 
-    override fun onBindViewHolder(holder: TradesViewHolder, position: Int) {
+    var listener: Listener? = null
+
+    override fun getItemViewType(position: Int): Int = when (position) {
+        0 -> {
+            ITEM_HEADER
+        }
+        else -> {
+            ITEM
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseTradeViewHolder {
+        val baseViewHolder: BaseTradeViewHolder
+
+        when (viewType) {
+            ITEM_HEADER -> {
+                baseViewHolder = HeaderViewHolder(
+                    DataBindingUtil.inflate(
+                        LayoutInflater.from(parent.context),
+                        R.layout.trade_heder_item,
+                        parent,
+                        false
+                    )
+                )
+            }
+
+            else -> {
+                baseViewHolder = TradesViewHolder(
+                    DataBindingUtil.inflate(
+                        LayoutInflater.from(parent.context),
+                        R.layout.trade_detail_list_item,
+                        parent,
+                        false
+                    )
+                )
+            }
+
+        }
+        return baseViewHolder
+
+    }
+
+    override fun onBindViewHolder(holder: BaseTradeViewHolder, position: Int) {
         val trade = getItem(position)
         holder.apply {
             bind(createOnClickListener(trade), trade)

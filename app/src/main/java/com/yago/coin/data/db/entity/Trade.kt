@@ -11,7 +11,7 @@ data class Trade(
 
     val sku: String?,
 
-    val amount: String?,
+    val amount: Double?,
 
     val currency: String?
 

@@ -96,6 +96,38 @@ class MainRepository @Inject constructor(
         }.asLiveData()
     }
 
+    fun getDbRates(): LiveData<List<Rate>> {
+
+        val dataLD = MediatorLiveData<List<Rate>>()
+
+        appExecutors.diskIO().execute {
+
+            val list = coinDb.rateDao().getAllData()
+
+            appExecutors.mainThread().execute {
+                dataLD.value = list
+            }
+        }
+        return dataLD
+
+    }
+
+    fun getDbTransactions(): LiveData<List<Trade>> {
+
+        val dataLD = MediatorLiveData<List<Trade>>()
+
+        appExecutors.diskIO().execute {
+
+            val list = coinDb.tradeDao().getAllData()
+
+            appExecutors.mainThread().execute {
+                dataLD.value = list
+            }
+        }
+        return dataLD
+
+    }
+
     fun getDistinctTrades(): LiveData<List<TransactionSkuData>> {
 
         val dataLD = MediatorLiveData<List<TransactionSkuData>>()

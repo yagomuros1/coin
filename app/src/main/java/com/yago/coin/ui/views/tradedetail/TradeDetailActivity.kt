@@ -84,9 +84,6 @@ class TradeDetailActivity : BindingActivity<ActivityTradeDetailBinding>(), HasSu
     private fun initializeViewObservers() {
 
         tradeDetailViewModel.transactions.observe(this, { list ->
-            list.sumOf { it.eurAmount.toDouble() }.let {
-                binding.total.text = it.toString()
-            }
             tradesAdapter.submitList(list)
         })
 

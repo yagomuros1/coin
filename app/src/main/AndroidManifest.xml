@@ -21,7 +21,11 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name="com.yago.coin.ui.views.splash.SplashActivity"
+        <activity
+            android:name=".ui.views.splash.SplashActivity"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/WhiteTheme"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

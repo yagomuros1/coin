@@ -13,16 +13,16 @@ object DataAssembler {
         coinDb.runInTransaction {
             coinDb.rateDao().removeAllData()
             rates.forEach { rate ->
-                coinDb.rateDao().save(Rate(from = rate.from, to = rate.to, rate = rate.rate))
+                coinDb.rateDao().save(Rate(from = rate.from, to = rate.to, rate = rate.rate.toDouble()))
             }
         }
     }
 
     fun assembleTrades(coinDb: CoinDb, trades: List<TransactionResponse>, app: Application) {
         coinDb.runInTransaction {
-
+            coinDb.tradeDao().removeAllData()
             trades.forEach { trade ->
-                coinDb.tradeDao().save(Trade(id = null, sku = trade.sku, amount = trade.amount, currency = trade.currency))
+                coinDb.tradeDao().save(Trade(id = null, sku = trade.sku, amount = trade.amount.toDouble(), currency = trade.currency))
             }
         }
     }

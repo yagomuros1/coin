@@ -5,18 +5,12 @@
     <string name="welcome">¡Welcome!</string>
     <string name="ok">OK</string>
 
-    <!-- Tabs -->
-    <string name="title_bs">Busca Segura</string>
-    <string name="title_portfolio">Portfolio</string>
-    <string name="title_presenca">Presença</string>
-
-    <!-- Connect -->
-    <string name="connect_error">Login error connect</string>
-    <string name="saving_token">Saving token %s</string>
-
     <!-- Errores -->
     <string name="generic_error">Error</string>
     <string name="permission_error">Error de permisos</string>
+
+    <string name="transactions">%d transactions</string>
+    <string name="total_transactions">Total amount: %s €</string>
 
 
 </resources>

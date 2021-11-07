@@ -72,25 +72,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(), HasSupportFragmentI
 
     private fun initializeViewObservers() {
 
-        mainViewModel.rates.observe(this, { value ->
-
-            if (value.status == Status.SUCCESS) {
-                mainViewModel.onGetTransactions()
-            } else if (value.status == Status.ERROR) {
-                toast("Error!")
-            }
-
-        })
-
-        mainViewModel.transactions.observe(this, { value ->
-
-            if (value.status == Status.SUCCESS) {
-                mainViewModel.getDistinctTrades()
-            } else if (value.status == Status.ERROR) {
-                toast("Error!")
-            }
-
-        })
 
         mainViewModel.distinct.observe(this, { value ->
 

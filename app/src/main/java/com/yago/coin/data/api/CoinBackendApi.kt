@@ -7,10 +7,10 @@ import retrofit2.http.GET
 
 interface CoinBackendApi {
 
-    @GET("rates.json")
+    @GET("rates")
     fun getRates(): LiveData<ApiResponse<List<RateResponse>>>
 
-    @GET("transactions.json")
+    @GET("transactions")
     fun getTrades(): LiveData<ApiResponse<List<TransactionResponse>>>
 
 }

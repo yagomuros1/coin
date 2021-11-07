@@ -6,16 +6,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import com.yago.coin.data.db.entity.Rate
 import com.yago.coin.data.db.entity.Trade
+import com.yago.coin.data.db.entity.TransactionSkuData
 import com.yago.coin.data.repository.MainRepository
 import com.yago.coin.data.utils.Resource
-import com.yago.coin.data.db.entity.TransactionSkuData
 import com.yago.coin.domain.livedata.AbsentLiveData
 import javax.inject.Inject
 
 class MainInteractor @Inject constructor(private val app: Application, private val mainRepository: MainRepository) {
 
     private val rateTrigger = MutableLiveData<Unit>()
+    private val savedRateTrigger = MutableLiveData<Unit>()
     private val transactionTrigger = MutableLiveData<Unit>()
+    private val savedTransactionTrigger = MutableLiveData<Unit>()
     private val distinctTransactionsTrigger = MutableLiveData<Unit>()
     private val skuTransactionsFilter = MutableLiveData<String?>()
 
@@ -28,10 +30,28 @@ class MainInteractor @Inject constructor(private val app: Application, private v
             }
         }
 
+    val dbRates: LiveData<List<Rate>> = Transformations
+        .switchMap(rateTrigger) { filter ->
+            if (filter != null) {
+                mainRepository.getDbRates()
+            } else {
+                AbsentLiveData.create()
+            }
+        }
+
     val transactions: LiveData<Resource<List<Trade>>> = Transformations
         .switchMap(transactionTrigger) { filter ->
             if (filter != null) {
                 mainRepository.getTrades()
+            } else {
+                AbsentLiveData.create()
+            }
+        }
+
+    val dbTransactions: LiveData<List<Trade>> = Transformations
+        .switchMap(transactionTrigger) { filter ->
+            if (filter != null) {
+                mainRepository.getDbTransactions()
             } else {
                 AbsentLiveData.create()
             }
@@ -71,10 +91,12 @@ class MainInteractor @Inject constructor(private val app: Application, private v
         skuTransactionsFilter.value = sku
     }
 
-    fun getTransactionsInEuro(sku: String?) {
+    fun getSavedRates() {
+        savedRateTrigger.value = Unit
+    }
 
-
-
+    fun getSavedTransactions() {
+        savedTransactionTrigger.value = Unit
     }
 
 }
